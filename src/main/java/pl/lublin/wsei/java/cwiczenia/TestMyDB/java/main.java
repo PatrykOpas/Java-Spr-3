@@ -12,5 +12,7 @@ public class main {
         if (conn != null){
             System.out.println("Połączenie z bazą danych nawiązane");
         }
+        db.closeConnection();
+        System.out.println("Połączenie z bazą zakończone");
     }
 }
