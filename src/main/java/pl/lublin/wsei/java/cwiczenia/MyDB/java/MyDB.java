@@ -12,6 +12,7 @@ public class MyDB {
     private String host = "";
     private Integer port = 0;
     private String dbName = "";
+    private Statement statement = null;
 
     public MyDB(String Host, int PORT, String dbNAME) {
         host = Host;
@@ -19,10 +20,11 @@ public class MyDB {
         dbName = dbNAME;
     }
 
-    public void setUser(String USER){
+    public void setUser(String USER) {
         user = USER;
     }
-    public void setPasswod(String PASSWORD){
+
+    public void setPasswod(String PASSWORD) {
         passwod = PASSWORD;
     }
 
@@ -35,12 +37,13 @@ public class MyDB {
         String jdbcString = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
         try {
             conn = DriverManager.getConnection(jdbcString, connectionProps);
+            statement = conn.createStatement();
         } catch (SQLException e) {
             System.out.println("Błąd połączenia do bazy: " + jdbcString);
             System.out.println("Komunikat błędu: " + e.getMessage());
             conn = null;
         }
-        System.out.println("Connected to database" + dbName);
+        System.out.println("Connected to database: " + dbName);
     }
 
     public Connection getConnection() {
@@ -49,12 +52,12 @@ public class MyDB {
         return conn;
     }
 
-    public void closeConnection(){
-        if (conn != null){
-            try{
+    public void closeConnection() {
+        if (conn != null) {
+            try {
                 conn.close();
-            }catch (SQLException e){
-                System.out.println("Błąd przy zamykaniu połączenia bazodanowego: "+e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("Błąd przy zamykaniu połączenia bazodanowego: " + e.getMessage());
             }
         }
     }
